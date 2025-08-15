@@ -1,3 +1,9 @@
+---
+title: "BlockTrain"
+author: Jacob Lopp
+state: discussion
+---
+
 # BlockTrain
 
 Component building blocks for supervised ML training
@@ -14,9 +20,3 @@ Component building blocks for supervised ML training
     - `poetry install`
 
 # Request for Discussion
-
----
-title: "BlockTrain"
-author: Jacob Lopp
-state: discussion
----
