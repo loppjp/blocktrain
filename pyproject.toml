@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "blocktrain"
+version = "0.0.1"
+description = "Component building blocks for supervised ML training"
+authors = ["loppjp <jacob.lopp@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+
+[tool.poetry.dev-dependencies]
+pytest = "^8.4.1"
+
+[tool.poetry.extras]
+formatting = ["black"]
+
+[tool.poetry.scripts]
+blocktrain = 'blocktrain:main'
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

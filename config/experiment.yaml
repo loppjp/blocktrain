@@ -1,0 +1,19 @@
+experiment:
+  name: ""
+  train_eval_dataset:
+    path: "data/train.csv"
+    __module__: "blocktrain.data" 
+    __class__: "Dataset"
+    path: "data/eval.csv"
+  trainer:
+    __module__: "blocktrain.trainer"
+    __class___: "Trainer"
+  callbacks:
+    early_stopping:
+      __module__: "blocktrain.callbacks"
+      __class__: "EarlyStopping"
+      patience: 3
+    model_checkpoint:
+      __module__: "blocktrain.callbacks"
+      __class__: "ModelCheckpoint"
+      filepath: "checkpoints/best_model.pth"
