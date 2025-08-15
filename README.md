@@ -2,7 +2,7 @@
 
 Component building blocks for supervised ML training
 
-# Dev Setup / Install
+# Quickstart
 
 - use a recent python
     - `python3.12 -m venv env`
@@ -12,3 +12,11 @@ Component building blocks for supervised ML training
     - `pip install poetry`
 - Install blocktrain
     - `poetry install`
+
+# Request for Discussion
+
+---
+title: "BlockTrain"
+author: Jacob Lopp
+state: discussion
+---
