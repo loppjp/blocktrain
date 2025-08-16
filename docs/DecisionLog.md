@@ -52,6 +52,18 @@ There are multiple machine learning frameworks, and multiple deep learning frame
 
  Begin to do data analysis on a static, stable, shuffled subset of images and data (e.g. 60%/20%/20% split). Leverage this as the training dataset.
 
+ We desire static splitting to ensure that training data does not unintentionally leak into the evaluation and test set. Static is a reference for saving the indicies that will be associated with a given train/eval/test dataset. 
+
+ We desire a stable dataset split that is reproducable across runs, and user (human attempting to train model) interactions. This can be acheived by specifying a seed before shuffling the dataset
+
+ We desire a shuffled dataset to preserve the fundamental idd assumption. That is, the model should train on data that is individually identically distributributed.
+
+ To acheive this, we will save a file to disk called the index list. There can be multiple index lists. They represent the ordered set of training data indicies from the full dataset to use for, training, eval, and test, all separately. 
+
+ The plan will be to save an index list file to disk specifying the particular indicies (of the full dataset) to be used for train/eval/test. This ordering will be used in subsequent training runs will remain stable by virtue of saving the indicies used for training. This is a useful coordination artifact so that other team members can evaluate eachothers' models without risk of leaking training dataset examples.
+
+ In the notebook `notebooks/ir_dataset_folder_analysis.ipynb` we discovered that the images in each folder were unevenly distributed. Ideally this would not be the case, especially if each image folder brings different conditions (environment, lighting, background etc.). For now, this dataset imblanaced will be triaged and risk mitigated by the fact that we can go back and re-generate a index list
+
 1. Use of Torch Datasets
 
  This implementation will leverage the Dataset APIs from pytorch. Torch datasets are widely used, there is a rich API for combining and sampling different dataset. Given this compositional nature, and due to less familiarity with huggingface datasets and other providers, the choice is to pursue torch datasets for now.
