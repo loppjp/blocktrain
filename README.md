@@ -139,12 +139,27 @@ Pytorch datasets are a common and very practical way to interact with streaming 
     
 The stakeholder has indicated that there is a preference toward the "2nd/non-Matlab" dataset. As such, initial exploration will focus on this dataset. This dataset contains 13502 png files. The data is distributed into 18 folders. Each folder there is a single json file, presumably the labels. Each folder contains a varied number of images with a minimum of 487 to a maximum of 1630.
 
+
 1.1.2 Bounding box analysis
 
+1.1.2.1 Existance Distribution
 
+1.1.2.1 Bounding box 4 parameter tuple
+
+1.1.2.2 Bounding box aspect ratio analysis
+
+1.1.2.3 Locality distribution
+
+How are the the bounding box center positions distributed amongst the training data? This analysis is especially useful for CV models that lack spatial invariance, potentially including transformer vision models. Fully convolutional models should be less affected. There may also be knock on effects in data augmentation
+
+1.1.3 Image size 
 
 
 1. ### Analysis of Test Dataset
+
+1.1. Dataset Size
+
+The .png file dataset is small enough to fit into RAM (~1.3 GB) on the this workstation (has 64 GB RAM). Although we cannot assume this will be the case going forward, it is a simplifying assumption that will help move to a training pipeline in the near term.
 
 1. ### Analysis of prototype sensor model
 
