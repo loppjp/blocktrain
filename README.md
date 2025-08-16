@@ -9,7 +9,7 @@ output:
 
 # BlockTrain
 
-Component building blocks for supervised ML training
+Component building blocks for ML training
 
 # Quickstart
 
@@ -131,7 +131,18 @@ Pytorch datasets are a common and very practical way to interact with streaming 
 
 1. ### Analysis of Supporting Frameworks and Tooling
 
-1. ### Analysis of Training Datasets
+1. ### Analysis and Prep of Training Datasets
+
+1.1 Initial Data Exploration
+
+1.1.1 non MATLAB dataset training analysis
+    
+The stakeholder has indicated that there is a preference toward the "2nd/non-Matlab" dataset. As such, initial exploration will focus on this dataset. This dataset contains 13502 png files. The data is distributed into 18 folders. Each folder there is a single json file, presumably the labels. Each folder contains a varied number of images with a minimum of 487 to a maximum of 1630.
+
+1.1.2 Bounding box analysis
+
+
+
 
 1. ### Analysis of Test Dataset
 
