@@ -19,21 +19,6 @@ class EpochInputData:
     dataloader: DataLoader
 
 
-@dataclass
-class EpochTrainingOutputData:
-    losses: float
-
-
-@dataclass
-class TrainingStepInputData:
-    step_number: int
-
-
-@dataclass
-class TrainingStepOutputData:
-    loss: float
-
-
 class BaseExperiment(IComponentProvider):
     def __init__(self, *args, **kwargs):
         self.train_dataset: Dataset = None

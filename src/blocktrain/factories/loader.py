@@ -1,6 +1,7 @@
 import importlib
 from typing import Any
 from copy import deepcopy
+from copy import copy
 
 """
 Factory keywords determine which strings are given special treatment
@@ -8,7 +9,7 @@ Factory keywords determine which strings are given special treatment
 KEYWORDS = ["__module__", "__class__", "__args__"]
 
 
-def load(spec: dict) -> Any:
+def load(spec: dict, *args, **kwargs) -> Any:
     """
     Given a specification dictionary (spec), load a class from a module and
     pass the desired arguments and keyword arguments as specified.
@@ -37,10 +38,12 @@ def load(spec: dict) -> Any:
     """
 
     # get the positiona arguments from the spec
-    args = spec["__args__"] if "__args__" in spec else []
+    if "__args__" in spec:
+        args = list(args)
+        args.extend(spec["__args__"])
 
     # the kwargs dict is just the spec but without the keywords and their values
-    kwargs = deepcopy(spec)
+    kwargs.update(copy(spec))
 
     # get rid of keywords
     for keyword in KEYWORDS:

@@ -11,17 +11,20 @@ class Experiment(BaseExperiment):
         self,
         train_dataset=None,
         eval_dataset=None,
-        trainer=None,
         callbacks=None,
+        model=None,
     ):
         self.train_dataset = train_dataset
         self.eval_dataset = eval_dataset
-        self.trainer = trainer
         self.callbacks = callbacks
+        self.model = model
 
         # dataloaders
         self.train_dataloader = None
         self.eval_dataloader = None
+        
+        # optimizer (requires model weights)
+        self.optimizer = None
 
 
 def experiment_factory(*_, **kwargs) -> Experiment:
@@ -31,9 +34,14 @@ def experiment_factory(*_, **kwargs) -> Experiment:
     e = Experiment(
         train_dataset=load(kwargs["train_dataset"]),
         eval_dataset=load(kwargs["eval_dataset"]),
-        trainer=load(kwargs["trainer"]),
         callbacks=[load(cb) for cb in kwargs["callbacks"]],
+        model=load(kwargs["model"]),
     )
+
+    # pass self as a IComponentProvider
+    e.trainer = load(kwargs["trainer"], component_provider=e)
+
+    e.optimizer = load(kwargs["optimizer"], component_provider=e)
 
     e.train_dataloader = dataloader_factory(
         e.get_train_dataset(),

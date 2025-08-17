@@ -27,6 +27,9 @@ class FolderImageFileSystemDataset(Dataset):
             image_dir: path to the images
             extension: the extension to load, assumes same, specified without dot (e.g. specify png, not .png)
         """
+        annotations_file = Path(annotations_file) if isinstance(annotations_file, str) else annotations_file
+        image_dir = Path(image_dir) if isinstance(image_dir, str) else image_dir
+
         self.annotations_file = annotations_file
         self.image_dir = image_dir
         self.extension = extension

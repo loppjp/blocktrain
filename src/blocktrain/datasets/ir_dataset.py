@@ -18,18 +18,23 @@ def ir_dataset_factory(
     """
     Creates a concat dataset based off of child dataset spec
     """
+    top_level_dataset_folder = Path(top_level_dataset_folder) if isinstance(top_level_dataset_folder, str) else top_level_dataset_folder
+    indicies_json_file_path = Path(indicies_json_file_path) if isinstance(indicies_json_file_path, str) else indicies_json_file_path
+
     dataset_folders: list[Path] = list(top_level_dataset_folder.glob(child_dataset_folder_path_glob))
 
     full_dataset: torch.utils.data.Dataset = torch.utils.data.ConcatDataset([
-        load(
-            list(dataset_folder.glob("*.json"))[0], # annotations file
-            dataset_folder,
+        load({
+            "__args__":[
+                list(dataset_folder.glob("*.json"))[0], # annotations file
+                dataset_folder,
+            ],
             **child_spec
-        )
+        })
         for dataset_folder in dataset_folders
     ])
 
     return torch.utils.data.Subset(
         full_dataset,
-        json.load(indicies_json_file_path.open())
+        json.load(indicies_json_file_path.absolute().open())
     )

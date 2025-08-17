@@ -10,4 +10,4 @@ def get_config_path():
     return Path(blocktrain.__file__).parent.parent.parent/"config"
 
 def get_test_experiment():
-    return get_config_path()/"experiment.yaml"
+    return get_config_path()/"test_experiment.yaml"

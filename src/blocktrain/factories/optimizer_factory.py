@@ -1,0 +1,21 @@
+import torch
+
+from blocktrain.factories.loader import load
+from blocktrain.component_api import IComponentProvider
+
+def load_optimizer(
+    *args,
+    optimizer_module:str = "torch.optim",
+    optimizer_class:str = None,
+    component_provider: IComponentProvider = None,
+    **kwargs,
+):
+    model: torch.nn = component_provider.get_model()
+    return load(
+        {
+            "__module__":optimizer_module,
+            "__class__":optimizer_class,
+        },
+        model.parameters(), 
+        **kwargs
+    )

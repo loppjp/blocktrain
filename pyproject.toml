@@ -13,6 +13,8 @@ opencv-python = ">=4.0,<5.0"
 matplotlib = "^3.10.5"
 pandas = "^2.3.1"
 numpy = "^2.3.2"
+tqdm = "^4.67.1"
+torchvision = "^0.23.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^8.4.1"

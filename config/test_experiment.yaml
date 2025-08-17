@@ -7,12 +7,18 @@ experiment:
       - "data/train_indicies.json"
     __module__: "blocktrain.datasets.ir_dataset" 
     __class__: "ir_dataset_factory"
+    child_spec:
+      __module__: "blocktrain.datasets.ir_folder_image_file_system_dataset"
+      __class__: "FolderImageFileSystemDataset"
   eval_dataset:
     __args__: 
       - "/mnt/d/drone_data/training-data"
       - "data/eval_indicies.json"
     __module__: "blocktrain.datasets.ir_dataset" 
     __class__: "ir_dataset_factory"
+    child_spec:
+      __module__: "blocktrain.datasets.ir_folder_image_file_system_dataset"
+      __class__: "FolderImageFileSystemDataset"
   trainer:
     __module__: "blocktrain.trainer"
     __class___: "Trainer"
@@ -29,5 +35,4 @@ experiment:
     __class__: "load_optimizer"
     optimizer_module: "torch.optim"
     optimizer_class: "Adam"
-    lr: 1e-3
-    momentum: 0.9
+    lr: 0.001
