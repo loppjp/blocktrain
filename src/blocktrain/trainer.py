@@ -15,7 +15,8 @@ from blocktrain.callbacks import (
 )
 from blocktrain.experiment_api import (
     TrainingInputParameters,
-    EpochInputData,
+    TrainingEpochInputData,
+    EvalEpochInputData,
 )
 
 
@@ -29,10 +30,10 @@ class BaseTrainer(ITrainer):
         **kwargs,
     ):
         self.training_input_parameters: TrainingInputParameters = (
-            training_input_parameters
+            TrainingInputParameters(**training_input_parameters)
         )
 
-        self.callbacks: list[ICallback]
+        self.callbacks: list[ICallback] = []
 
         self.component_provider: IComponentProvider = component_provider
 
@@ -46,7 +47,12 @@ class BaseTrainer(ITrainer):
             for callback in self.callbacks:
                 callback.on_train_epoch_start()
 
-            self.train_epoch()
+            self.train_epoch(
+                TrainingEpochInputData(
+                    epoch_number=epoch_idx + 1,
+                    dataloader=self.component_provider.get_train_dataloader(),
+                )
+            )
 
             for callback in self.callbacks:
                 callback.on_train_epoch_end()
@@ -59,15 +65,17 @@ class BaseTrainer(ITrainer):
         for callback in self.callbacks:
             callback.on_eval_start()
 
-        self.eval_epoch()
+        self.eval_epoch(EvalEpochInputData(
+            self.component_provider.get_eval_dataloader()
+        ))
 
         for callback in self.callbacks:
             callback.on_eval_end()
 
-    def train_epoch(self):
+    def train_epoch(self, epoch_data: TrainingEpochInputData):
         pass
 
-    def eval_epoch(self):
+    def eval_epoch(self, epoch_data: EvalEpochInputData):
         pass
 
     def set_component_provider(self, component_provider):
@@ -84,7 +92,7 @@ class Trainer(BaseTrainer):
 
         super().__init__(*args, **kwargs)
 
-    def train_epoch(self, epoch_data: EpochInputData):
+    def train_epoch(self, epoch_data: TrainingEpochInputData):
 
         model: torch.nn = self.component_provider.get_model()
         model.train(True)
@@ -107,7 +115,7 @@ class Trainer(BaseTrainer):
             for callback in self.callbacks:
                 callback.on_train_step_end(TrainingStepOutputData(loss=losses.item()))
 
-    def eval_epoch(self, epoch_data: EpochInputData):
+    def eval_epoch(self, epoch_data: EvalEpochInputData):
 
         model: torch.nn = self.component_provider.get_model()
         model.eval()

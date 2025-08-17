@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 
 import cv2
+import torch
 
 from torch.utils.data import Dataset
 
@@ -41,4 +42,10 @@ class FolderImageFileSystemDataset(Dataset):
         labels = json.load(self.annotations_file.open())
         img_path = list(self.image_dir.glob(f"*.{self.extension}"))[idx]
         img = cv2.imread(str(img_path))
-        return img, labels["exist"][idx], *labels["gt_rect"][idx]
+        return (
+            torch.from_numpy(img), 
+            torch.Tensor((
+                labels["exist"][idx], 
+                *labels["gt_rect"][idx]
+            ))
+        ) 

@@ -13,9 +13,12 @@ class TrainingInputParameters:
 
 
 @dataclass
-class EpochInputData:
+class TrainingEpochInputData:
     epoch_number: int
-    total_steps: int
+    dataloader: DataLoader
+
+@dataclass
+class EvalEpochInputData:
     dataloader: DataLoader
 
 

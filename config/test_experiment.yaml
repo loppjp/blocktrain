@@ -1,3 +1,6 @@
+# this experiment is designed to be coupled with the
+# unit tests located in the test folder
+
 experiment:
   __module__: "blocktrain.experiment"
   __class__: "experiment_factory"
@@ -19,17 +22,24 @@ experiment:
     child_spec:
       __module__: "blocktrain.datasets.ir_folder_image_file_system_dataset"
       __class__: "FolderImageFileSystemDataset"
+  train_dataloader:
+    __module__: "torch.utils.data"
+    __class__: "DataLoader"
+    batch_size: 2
+  eval_dataloader:
+    __module__: "torch.utils.data"
+    __class__: "DataLoader"
+    batch_size: 2
   trainer:
     __module__: "blocktrain.trainer"
     __class__: "Trainer"
   callbacks: []
   model:
-    __module__: "blocktrain.factories.torchvision_model_factory"
-    __class__: "load_torchvision_model"
-    torchvision_module: "torchvision.models.detection"
-    torchvision_class: "retinanet_resnet50_fpn"
-    model_kwargs:
-      weights: DEFAULT
+    __module__: "torchvision.models"
+    __class__: "get_model"
+    __args__: 
+      - "retinanet_resnet50_fpn_v2"
+    weights: DEFAULT
   optimizer:
     __module__: "blocktrain.factories.optimizer_factory"
     __class__: "load_optimizer"

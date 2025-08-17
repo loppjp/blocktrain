@@ -42,6 +42,13 @@
             "args": ["tests/test_instantiation.py::TestInstantiateIRDataset"]
         },
         {
+            "name": "Test Instantiate Dataloader",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "pytest",
+            "args": ["tests/test_instantiation.py::TestInstantiateDataloader"]
+        },
+        {
             "name": "Test Instantiate Model",
             "type": "debugpy",
             "request": "launch",

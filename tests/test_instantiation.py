@@ -7,6 +7,7 @@ from blocktrain.factories.loader import load
 from blocktrain.factories.experiment_factory import from_file
 from blocktrain.test_utilities.path_utilities import get_test_experiment
 from blocktrain.component_api import IComponentProvider
+from blocktrain.factories.dataloader_factory import dataloader_factory
 
 
 class TestInstantiateExperiment(unittest.TestCase):
@@ -73,3 +74,20 @@ class TestInstantiateTrainer(unittest.TestCase):
             component_provider=TestComponentProvider()
         )
         self.assertIsNotNone(tr)
+
+class TestDataset(torch.utils.data.Dataset):
+    def __len__(self):
+        return 1
+    def __getitem__(self, idx):
+        return 0
+
+class TestInstantiateDataloader(unittest.TestCase):
+
+    def test_instantiate(self):
+        t = get_test_experiment()
+        spec = yaml.load(t.open(), Loader=yaml.SafeLoader)
+        dl = dataloader_factory(
+            TestDataset(),
+            **spec["experiment"]["train_dataloader"],
+        )
+        self.assertIsNotNone(dl)

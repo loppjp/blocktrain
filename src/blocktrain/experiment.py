@@ -26,6 +26,13 @@ class Experiment(BaseExperiment):
         # optimizer (requires model weights)
         self.optimizer = None
 
+    def get_model(self):
+        return self.model
+
+    def get_optimizer(self):
+        return self.optimizer
+
+
 
 def experiment_factory(*_, **kwargs) -> Experiment:
     """
