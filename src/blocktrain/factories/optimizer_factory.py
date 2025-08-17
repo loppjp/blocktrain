@@ -10,6 +10,11 @@ def load_optimizer(
     component_provider: IComponentProvider = None,
     **kwargs,
 ):
+    """
+    The torch optimizers require parametres. Therefore,
+    this factory will support access to the model by leveraging
+    the component_provider interface
+    """
     model: torch.nn = component_provider.get_model()
     return load(
         {

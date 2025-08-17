@@ -3,9 +3,9 @@ import argparse
 from blocktrain.train import main as train_main
 from blocktrain.utilities import get_config_path
 
-def cmd_init(**kwargs):
-    print("INIT")
-    raise NotImplementedError("Init not implemented")
+def cmd_eval(args):
+    print("EVAL")
+    raise NotImplementedError("Eval not implemented")
 
 def cmd_train(args):
     train_main(
@@ -13,7 +13,7 @@ def cmd_train(args):
     )
 
 CMD_MAP = {
-    "init": cmd_init,
+    "eval": cmd_eval,
     "train": cmd_train
 }
 
@@ -26,7 +26,7 @@ def main():
 
     cmd_subparsers = parser.add_subparsers(title="blocktrain", dest="cmd_init")
 
-    init_parser = cmd_subparsers.add_parser("init", help="init function")
+    eval_parser = cmd_subparsers.add_parser("eval", help="eval function")
 
     train_parser = cmd_subparsers.add_parser("train", help="train function")
 
@@ -41,7 +41,7 @@ def main():
 
     parser_map = {
         "train": train_parser,
-        "init": init_parser
+        "eval": eval_parser
     }
 
     cmd_parser_args = parser.parse_args()

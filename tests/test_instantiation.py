@@ -9,6 +9,10 @@ from blocktrain.test_utilities.utilities import get_test_experiment
 from blocktrain.component_api import IComponentProvider
 from blocktrain.factories.dataloader_factory import dataloader_factory
 
+"""
+Tests in this module focus on instantiating the components
+of the Experiment
+"""
 
 class TestInstantiateExperiment(unittest.TestCase):
 

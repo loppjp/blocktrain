@@ -1,5 +1,11 @@
 from dataclasses import dataclass
 
+"""
+This module includes the callback API (ICallback) and the data
+sent to a registered callback function from the training
+loop when the event occurs.
+"""
+
 @dataclass
 class EpochTrainingOutputData:
     losses: float
@@ -35,6 +41,10 @@ class EvalStepOutputData:
 
 
 class ICallback:
+    """
+    Callbacks are to be executed upon occurance of the event
+    that they describe
+    """
 
     def on_train_step_start(self, data: TrainingStepInputData, *args, **kwargs): pass
     def on_train_step_end(self, data: TrainingStepOutputData, *args, **kwargs): pass

@@ -1,12 +1,3 @@
----
-title: "BlockTrain"
-author: Jacob Lopp
-state: discussion
-output:
-    html_document:
-        numbered_sections: true
----
-
 # BlockTrain
 
 Component building blocks for ML training
@@ -177,6 +168,10 @@ The blocktrain training pipeline uses pytorch interfaces for all components:
 
 ![component_design](./docs/diagrams/component_design.drawio.png)
 
+2.2.6 Callbacks
+
+A training loop has distinct points in time that can be considered events. These events can be at the start of training, the start of an epoch, the start of a training step, or even upon a failure of some kind. The callbacks that will be available are described in the [callbacks api](./src/blocktrain/callbacks.py).
+
 ## 3. Analysis and Prep of Training Datasets
 
 3.1 Initial Data Exploration
@@ -199,9 +194,9 @@ TBD
 
 How are the the bounding box center positions distributed amongst the training data? This analysis is especially useful for CV models that lack spatial invariance, potentially including transformer vision models. Fully convolutional models should be less affected. There may also be knock on effects in data augmentation.
 
-TBD
+3.1.3 Image size
 
-3.1.3 Image size 
+Util otherwise determined, images in the dataset have been determined to be 512x512 with color.
 
 3.1.4 Dataset Size
 
@@ -209,11 +204,11 @@ The .png file dataset is small enough to fit into RAM (~1.3 GB) on the this work
 
 ## 4. Analysis of prototype sensor model
 
-TBD
+Specifications of the deployed sensor will be used 
 
 ## 5. ML model discussion
 
-Given the initial analysis of the training dataset provided, and stakeholder provided problem constraints, 
+Given the initial analysis of the training dataset provided, and stakeholder provided problem constraints, initial experiments will focus on object detection models. Some object detection models that will be initially considered for integration are those that are [available with torchvision here](https://docs.pytorch.org/vision/stable/models.html#object-detection). 
 
 ## 6. Priorities
 
@@ -238,7 +233,6 @@ Given the initial analysis of the training dataset provided, and stakeholder pro
 ### 7.1 Focus on Training Pipeline and prioritization
 
 Per stakeholder input to "Design an ML pipeline", emphasis for this project will be to design a ML training pipeline using a given dataset and target test cases. 
-
 
 ### 7.2 Poetry for dependency management
 
@@ -270,7 +264,13 @@ There are multiple machine learning frameworks, and multiple deep learning frame
 
  To acheive this, we will save a file to disk called the index list. There can be multiple index lists. They represent the ordered set of training data indicies from the full dataset to use for, training, eval, and test, all separately. 
 
- The plan will be to save an index list file to disk specifying the particular indicies (of the full dataset) to be used for train/eval/test. This ordering will be used in subsequent training runs will remain stable by virtue of saving the indicies used for training. This is a useful coordination artifact so that other team members can evaluate eachothers' models without risk of leaking training dataset examples.
+ The plan will be to save an index list file to disk specifying the particular indicies (of the full dataset) to be used for train/eval/test. This ordering will be used in subsequent training runs will remain stable by virtue of saving the indicies used for training. This is a useful coordination artifact so that other team members can evaluate eachothers' models without risk of leaking training dataset examples. 
+
+ The [`train_eval_test_split.ipynb notebook`](./notebooks/train_eval_test_split.ipynb) will facilitate generation of index list files. The initial index files have been saved as:
+ - [`train_indicices.json`](./data/train_indicies.json)
+ - [`eval_indicices.json`](./data/eval_indicies.json)
+ - [`test_indicices.json`](./data/test_indicies.json)
+
 
  In the notebook `notebooks/ir_dataset_folder_analysis.ipynb` we discovered that the images in each folder were unevenly distributed. Ideally this would not be the case, especially if each image folder brings different conditions (environment, lighting, background etc.). For now, this dataset imblanaced will be triaged and risk mitigated by the fact that we can go back and re-generate a index list
 
@@ -286,7 +286,19 @@ The Experiment class will have a dataloader. This will be highly coupled to the 
 
 ## 8. Future Work
 
-- Integration with experiment tracking tooling.
+Besides acheiving end-to-end training, evaluating a trained model, and proving inference, the following additional work has been identified:
+
+### 8.1 Addition of Metics API and callbacks
+
+Metrics are a critical component to any machine learning process. Given that there is a focus on object detection, initial metrics to be considered will be typical object detection metrics such as Average Precision.
+
+### 8.2 Save and Load
+
+Saving checkpoints during the training process is vital for retreiving a working model as desired during the process. Checkpoints will leverage the callback constructs described in other parts of this document.
+
+### 8.3 Integration with experiment tracking tooling
+
+The experiment specification data structure ([example](config/experiment.yaml)) is a natural fit for generation by a programattic design-of-experiments process. That is an design space can be explored by passing different variables into each component as hyperparameters in a search over alternatives.
 
 ## 9. Citations
 
