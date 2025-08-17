@@ -123,6 +123,14 @@
             </Array>
           </mxGeometry>
         </mxCell>
+        <mxCell id="VXz3fKvcQSW9_pXtkOVq-36" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="VXz3fKvcQSW9_pXtkOVq-28" target="VXz3fKvcQSW9_pXtkOVq-8">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="615" y="760" />
+              <mxPoint x="100" y="760" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
         <mxCell id="VXz3fKvcQSW9_pXtkOVq-28" value="trainer" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="555" y="670" width="120" height="60" as="geometry" />
         </mxCell>
