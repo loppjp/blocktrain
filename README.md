@@ -17,7 +17,7 @@ To interact with the training pipeline codebase and supporting artifacts, please
 
 ### Developer Installation
 
-- clone the project from <URL>
+- clone the project from [`https://github.com/loppjp/blocktrain`](https://github.com/loppjp/blocktrain)
 - use a recent version of python (e.g. 3.12) to get started
     - `python3.12 -m venv env`
 - upgrade to the latest version of the python package manager
