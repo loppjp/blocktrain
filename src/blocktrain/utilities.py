@@ -8,6 +8,3 @@ def get_config_path():
     of the config directory for experiments
     """
     return Path(blocktrain.__file__).parent.parent.parent/"config"
-
-def get_test_experiment():
-    return get_config_path()/"test_experiment.yaml"

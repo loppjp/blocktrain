@@ -26,12 +26,20 @@ To interact with the training pipeline codebase and supporting artifacts, please
     - `pip install poetry`
 - Install blocktrain
     - `poetry install`
+- Alternatively, to enable jupyter notebooks and unit tests install as
+    - `poetry install --with dev,notebooks`
 
-### Usage
+### Training Usage
 
+from the commandline after installation run: <br>
 
+    $ blocktrain train
 
-#### 
+### Unit Test Usage
+
+from the commandline after installation run: <br>
+
+    $ pytest
 
 ### Recommended Development Environment
 
@@ -41,16 +49,25 @@ To run jupyter notebooks a recommendation is to install the Microsoft Jupyter vs
 
 ### Notebook Usage
 
-### Training Usage
+Jupyter notebooks are used in the development of the training pipeline and for data analysis. After following the installation instructions, the notebooks are accessable after:
 
-#### Recommended Pre-checks for Training
+- (Recommended) installation of the Jupyter plugin
+- (Recommended) specification of the ipython kernel to match the user's python environment
+
+
+### Recommended Pre-checks for Training
 
 It is recommended that training be run within a linux environment
 
 To ensure the target training device is ready to support some steps can be taken:
 
-- Test: run `nvidia smi` on the command line
-- Expected Result: A text block with NVIDIA driver information
+#### 1. NVIDIA SMI
+
+to test from the command line run: <br>
+
+    $ nvidia smi
+
+Expect the following results within a text block with NVIDIA driver information:
 ```
 (env) [jacob@rhel8 blocktrain]$ nvidia-smi
 Fri Aug 15 15:46:53 2025       
@@ -75,21 +92,31 @@ Fri Aug 15 15:46:53 2025
 +-----------------------------------------------------------------------------------------+
 ```
 
-- Test: run `python -c "import torch;print(torch.cuda.is_available())"` on the command line
-- Expected Result: `True` printed to stdout
+#### 2. Torch CUDA availability
+
+to test run: <br>
+
+    source env/bin/activate
+    python -c "import torch;print(torch.cuda.is_available())"`
+
+The expected stdout return should be:
+
+    True
 
 ### Evaluation Usage
+
+TBD
 
 ---
 
 # Request for Discussion
 
-1. ### Initial Directions and statement breakdown
+## 1. Initial Directions and statement breakdown
 
-Given the stakeholder's request for a result within a short timeframe, some initial assumptions are considered. These initial assumptions will be refined when data analysis is completed.
+Given the stakeholder's request for a result within a short timeframe, some initial assumptions are considered. These initial assumptions will be refined when data analysis is completed. Initially, given a quick read of the stakeholder's initial input, we can infer that we may be able to:
 
-Initially, given a quick read of the stakeholder's initial input, we can infer that we may be able to:
 - Apply used supervised learning techniques to solve the problem
+- Other considerations are in the following talbe
 
 |         Data               |                             Response                      |
 | -------------------------- | --------------------------------------------------------- |
@@ -106,86 +133,91 @@ Some other considerations:
 - Deep learning, specifically deep computer vision may be applicable for this use case due to computer vision models' ability to recognize objects when conditioned on data
 
 
-1. ### Description of Training Pipeline
+## 2. Description of Training Pipeline
 
-Machine learning can be thought of as multiple, sometimes disparate data intensive, and compute intensive processes. 
+Machine learning can be thought of as multiple, sometimes disparate data intensive, and compute intensive processes. Training pipelines take, as inputs, a dataset, and a model architecture, as well as hyperparameters and transform these into parameters that can be used for inference.
 
-1. ### Desired Training Pipeline Features
+### 2.1 Desired Training Pipeline Features
 
 Initially, the training pipeline should:
-1) Expose a simple API:
+1) Expose a simple API for typical interactions:
      - with functions like `train`, `eval`, `predict` where:
         - `train`: conditions an ML on a dataset and results in the generation of a set of weights to be deployed
         - `eval`: evaluates a model and trained weights against a dataset to determine metrics
         - `predict`: performs inference on a batch of examples and produces results in some format.
-2) Be Configurable:
+2) Support additional interactions:
+    - `save_weights`: save the model weights for training, ideally using torch APIs
+    - `load_weights`: load the model weights for training, ideally using torch APIs
+    - `save`: save the entire experiment, including any metrics, hyperparameters, experiment specification
+    - `load`: load the entire experiment, including any metrics, hyperparameters, experiment specification
+3) Be Configurable:
     - such that datasets, training, parameters, and ML models can be relatively easily replaced.
-3) Experiments as a first-class-citizen
+4) Experiments as a first-class-citizen
     - The design should facilitate a usage pattern where a typical interaction is to specify one or more experiments to conduct with a given purpose.
 
-1. ### "BlockTrain" Training Pipeline Component Design
+### 2.2 "BlockTrain" Training Pipeline Component Design
 
-1.1 Component Concepts
-
-1.1.1 Experiment Specification
+2.2.1 Experiment Specification
 
 The Experiment Specification is a design construct of the pipeline that allows component level data driven experimentation. That is, a user can adjust the parameters of the training experiment to quickly acheive different results in a config-driven way. Machine learning training pipelines have canonical components that are shared across many implementations. These include datasets, models, callbacks, etc. The Experiment Specification allows these items to be changed, or for the parameters of each to be adjusted to facilitate the current experiment.
 
-1.1.2 Torch Datasets and Dataloaders
+2.2.3 Components
+
+The blocktrain training pipeline is focused on pairing an experiment specification with a trainer which uses components to condition a model on data:
+
+![experiment_block_diagram](./docs/diagrams/experiment_block_diagram.drawio.png)
+
+2.2.4 Torch Datasets and Dataloaders
 
 Pytorch datasets are a common and very practical way to interact with streaming or map style datasets. Implementing datasets is typically trival, especially for small datasets that can fit on the filesystem for a single workstation. Torch Dataloaders support various batch loading paradigms and can simplify and streamling the training process. For this training pipeline we will leverage torch datasets. Future work can bring Datasets and Dataloading constructs from other training frameworks (e.g. huggingface or pytorch lighting)
 
-1. ### Analysis of Supporting Frameworks and Tooling
+2.2.5 Component Interfaces
 
-1. ### Analysis and Prep of Training Datasets
+The blocktrain training pipeline uses pytorch interfaces for all components:
 
-1.1 Initial Data Exploration
+![component_design](./docs/diagrams/component_design.drawio.png)
 
-1.1.1 non MATLAB dataset training analysis
+## 3. Analysis and Prep of Training Datasets
+
+3.1 Initial Data Exploration
+
+3.1.1 non MATLAB dataset training analysis
     
 The stakeholder has indicated that there is a preference toward the "2nd/non-Matlab" dataset. As such, initial exploration will focus on this dataset. This dataset contains 13502 png files. The data is distributed into 18 folders. Each folder there is a single json file, presumably the labels. Each folder contains a varied number of images with a minimum of 487 to a maximum of 1630.
 
+Additional investigation can be found in this interactive notebook: [dataset_exploration](./notebooks/ir_dataset_folder_analysis.ipynb)
 
-1.1.2 Bounding box analysis
+3.1.2 Bounding box analysis
 
-1.1.2.1 Existance Distribution
+TBD
 
-1.1.2.1 Bounding box 4 parameter tuple
+3.1.2.1 Existance Distribution
 
-1.1.2.2 Bounding box aspect ratio analysis
+TBD
 
-1.1.2.3 Locality distribution
+3.1.2.3 Locality distribution
 
-How are the the bounding box center positions distributed amongst the training data? This analysis is especially useful for CV models that lack spatial invariance, potentially including transformer vision models. Fully convolutional models should be less affected. There may also be knock on effects in data augmentation
+How are the the bounding box center positions distributed amongst the training data? This analysis is especially useful for CV models that lack spatial invariance, potentially including transformer vision models. Fully convolutional models should be less affected. There may also be knock on effects in data augmentation.
 
-1.1.3 Image size 
+TBD
 
+3.1.3 Image size 
 
-1. ### Analysis of Test Dataset
-
-1.1. Dataset Size
+3.1.4 Dataset Size
 
 The .png file dataset is small enough to fit into RAM (~1.3 GB) on the this workstation (has 64 GB RAM). Although we cannot assume this will be the case going forward, it is a simplifying assumption that will help move to a training pipeline in the near term.
 
-1. ### Analysis of prototype sensor model
+## 4. Analysis of prototype sensor model
 
-1. ### Problem Discussion
+TBD
 
-1. ### ML model discussion
+## 5. ML model discussion
 
-1. ### Model deployment
+Given the initial analysis of the training dataset provided, and stakeholder provided problem constraints, 
 
-1. ### Design goals, Ground Rules, Assumptions
+## 6. Priorities
 
-1. ### Descision Log
-
-.1 Focus on Training Pipeline and prioritization
-
-Per stakeholder input to "Design an ML pipeline", emphasis for this project will be to design a ML training pipeline using a given dataset and target test cases. 
-
-### Priorities
-
-#### High
+### 6.1 High
 
 - Design artifacts for a CV ML training pipeline.
     - At this time, CV and ML are inferred based on context
@@ -195,13 +227,20 @@ Per stakeholder input to "Design an ML pipeline", emphasis for this project will
 - Generation of model weights using one or both training datasets.
 - Considerations for the expected sensor and updates to documents and code to support considerations.
 
-#### Medium
+### 6.2 Medium
 
 - Documentation of code
 - Training Metrics
 - Exploratory data analysis notebooks
 
-.2 Poetry for dependency management
+## 7. Descision Log
+
+### 7.1 Focus on Training Pipeline and prioritization
+
+Per stakeholder input to "Design an ML pipeline", emphasis for this project will be to design a ML training pipeline using a given dataset and target test cases. 
+
+
+### 7.2 Poetry for dependency management
 
 Poetry is a relatively popular, although somewhat slow, package management system for python. It trades speed for reliability. 
 
@@ -213,11 +252,11 @@ The instability of builds due to ordering leads us to look at options other than
 
  Without time to evaluate conda and uv, poetry has been chosen for this project to allow dependencies to be added and removed easily during the development process and ideally result in more reproducable builds.
 
-.3 Use of pytorch
+### 7.3 Use of pytorch
 
 There are multiple machine learning frameworks, and multiple deep learning frameworks. Given the need for speed-to-implementation we are choosing to use pytorch due to familiarity and rich ecosystem. Alternatives momentarily considered are tensorflow, jax, scikit learn, open cv.
 
-.4 Data Analysis Training Split
+### 7.4 Data Analysis Training Split
  
  First, shuffle split the training dataset as soon as there is a reasonable mechanism to load data from the source (disk) without doing distribution analysis.
 
@@ -235,25 +274,21 @@ There are multiple machine learning frameworks, and multiple deep learning frame
 
  In the notebook `notebooks/ir_dataset_folder_analysis.ipynb` we discovered that the images in each folder were unevenly distributed. Ideally this would not be the case, especially if each image folder brings different conditions (environment, lighting, background etc.). For now, this dataset imblanaced will be triaged and risk mitigated by the fact that we can go back and re-generate a index list
 
-.5 Use of Torch Datasets
+### 7.5 Use of Torch Datasets
 
- This implementation will leverage the Dataset APIs from pytorch. Torch datasets are widely used, there is a rich API for combining and sampling different dataset. Given this compositional nature, and due to less familiarity with huggingface datasets and other providers, the choice is to pursue torch datasets for now.
+This implementation will leverage the Dataset APIs from pytorch. Torch datasets are widely used, there is a rich API for combining and sampling different dataset. Given this compositional nature, and due to less familiarity with huggingface datasets and other providers, the choice is to pursue torch datasets for now.
 
-.6 
+Two initial types of Dataset classes will be created, ones that load from the filesystem with load perations occuring at each invocation of `__getitem__` and the other pre-loading the dataset into RAM at class initialization time.
 
- 2 initial types of Dataset classes will be created, ones that load from the filesystem with load perations occuring at each invocation of `__getitem__` and the other pre-loading the dataset into RAM at class initialization time.
+This is done to allow flexibility in workflows depending on RAM or disk utilization. The expectation will be to use the RAM based datasets more often.
 
- This is done to allow flexibility in workflows depending on RAM or disk utilization. The expectation will be to use the RAM based datasets more often.
+The Experiment class will have a dataloader. This will be highly coupled to the pytorch API for now. 
 
-.7 The Experiment class will have a dataloader. This will be highly coupled to the pytorch API for now. 
-
-1. ### Future Work
+## 8. Future Work
 
 - Integration with experiment tracking tooling.
 
-1. ### Additional Information
-
-1. ### Citations
+## 9. Citations
 
 - [1] Svanström F, Englund C and Alonso-Fernandez F. (2020), GitHub repository, <br>
   https://github.com/DroneDetectionThesis/Drone-detection-dataset

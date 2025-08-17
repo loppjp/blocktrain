@@ -33,6 +33,8 @@ experiment:
   trainer:
     __module__: "blocktrain.trainer"
     __class__: "Trainer"
+    training_input_parameters:
+      num_epochs: 2
   callbacks: []
   model:
     __module__: "torchvision.models"

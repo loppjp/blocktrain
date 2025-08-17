@@ -5,7 +5,7 @@ import torch
 
 from blocktrain.factories.loader import load
 from blocktrain.factories.experiment_factory import from_file
-from blocktrain.test_utilities.path_utilities import get_test_experiment
+from blocktrain.test_utilities.utilities import get_test_experiment
 from blocktrain.component_api import IComponentProvider
 from blocktrain.factories.dataloader_factory import dataloader_factory
 
