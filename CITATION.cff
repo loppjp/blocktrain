@@ -1,0 +1,6 @@
+authors:
+  - family-names: Lopp
+    given-names: Jacob
+cff-version: 1.2.0
+message: "If using, cite it using this metadata."
+title: "trainblock"

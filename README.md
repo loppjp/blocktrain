@@ -1,4 +1,4 @@
-# BlockTrain
+# TrainBlock
 
 Component building blocks for ML training
 
@@ -8,14 +8,14 @@ To interact with the training pipeline codebase and supporting artifacts, please
 
 ### Developer Installation
 
-- clone the project from [`https://github.com/loppjp/blocktrain`](https://github.com/loppjp/blocktrain)
+- clone the project from [`https://github.com/loppjp/trainblock`](https://github.com/loppjp/trainblock)
 - use a recent version of python (e.g. 3.12) to get started
     - `python3.12 -m venv env`
 - upgrade to the latest version of the python package manager
     - `pip install -U pip`
 - This project uses poetry for dependency management. Install poetry:
     - `pip install poetry`
-- Install blocktrain
+- Install trainblock
     - `poetry install`
 - Alternatively, to enable jupyter notebooks and unit tests install as
     - `poetry install --with dev,notebooks`
@@ -24,7 +24,7 @@ To interact with the training pipeline codebase and supporting artifacts, please
 
 from the commandline after installation run: <br>
 
-    $ blocktrain train
+    $ trainblock train
 
 ### Unit Test Usage
 
@@ -60,7 +60,7 @@ to test from the command line run: <br>
 
 Expect the following results within a text block with NVIDIA driver information:
 ```
-(env) [jacob@rhel8 blocktrain]$ nvidia-smi
+(env) [jacob@rhel8 trainblock]$ nvidia-smi
 Fri Aug 15 15:46:53 2025       
 +-----------------------------------------------------------------------------------------+
 | NVIDIA-SMI 570.133.07             Driver Version: 572.83         CUDA Version: 12.8     |
@@ -146,7 +146,7 @@ Initially, the training pipeline should:
 4) Experiments as a first-class-citizen
     - The design should facilitate a usage pattern where a typical interaction is to specify one or more experiments to conduct with a given purpose.
 
-### 2.2 "BlockTrain" Training Pipeline Component Design
+### 2.2 "trainblock" Training Pipeline Component Design
 
 2.2.1 Experiment Specification
 
@@ -154,7 +154,7 @@ The Experiment Specification is a design construct of the pipeline that allows c
 
 2.2.3 Components
 
-The blocktrain training pipeline is focused on pairing an experiment specification with a trainer which uses components to condition a model on data:
+The trainblock training pipeline is focused on pairing an experiment specification with a trainer which uses components to condition a model on data:
 
 ![experiment_block_diagram](./docs/diagrams/experiment_block_diagram.drawio.png)
 
@@ -164,13 +164,13 @@ Pytorch datasets are a common and very practical way to interact with streaming 
 
 2.2.5 Component Interfaces
 
-The blocktrain training pipeline uses pytorch interfaces for all components:
+The trainblock training pipeline uses pytorch interfaces for all components:
 
 ![component_design](./docs/diagrams/component_design.drawio.png)
 
 2.2.6 Callbacks
 
-A training loop has distinct points in time that can be considered events. These events can be at the start of training, the start of an epoch, the start of a training step, or even upon a failure of some kind. The callbacks that will be available are described in the [callbacks api](./src/blocktrain/callbacks.py).
+A training loop has distinct points in time that can be considered events. These events can be at the start of training, the start of an epoch, the start of a training step, or even upon a failure of some kind. The callbacks that will be available are described in the [callbacks api](./src/trainblock/callbacks.py).
 
 ## 3. Analysis and Prep of Training Datasets
 

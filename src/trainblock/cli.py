@@ -1,7 +1,7 @@
 import argparse
 
-from blocktrain.train import main as train_main
-from blocktrain.utilities import get_config_path
+from trainblock.train import main as train_main
+from trainblock.utilities import get_config_path
 
 def cmd_eval(args):
     print("EVAL")
@@ -18,13 +18,13 @@ CMD_MAP = {
 }
 
 def main():
-    help="BlockTrain CLI is a component based ML training framework and library"
+    help="trainblock CLI is a component based ML training framework and library"
     parser = argparse.ArgumentParser(help)
 
     # inspo https://stackoverflow.com/questions/10448200/how-to-parse-multiple-nested-sub-commands-using-python-argparse/#answer-19476216
     parser.add_argument('cmd')
 
-    cmd_subparsers = parser.add_subparsers(title="blocktrain", dest="cmd_init")
+    cmd_subparsers = parser.add_subparsers(title="trainblock", dest="cmd_init")
 
     eval_parser = cmd_subparsers.add_parser("eval", help="eval function")
 

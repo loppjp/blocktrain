@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "blocktrain"
+name = "trainblock"
 version = "0.0.1"
 description = "Component building blocks for supervised ML training"
 authors = ["loppjp <jacob.lopp@gmail.com>"]
@@ -21,7 +21,7 @@ pytest = "^8.4.1"
 formatting = ["black"]
 
 [tool.poetry.scripts]
-blocktrain = 'blocktrain.cli:main'
+trainblock = 'trainblock.cli:main'
 
 [tool.poetry.group.notebooks.dependencies]
 matplotlib = "^3.10.5"

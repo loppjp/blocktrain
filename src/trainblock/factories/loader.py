@@ -16,7 +16,7 @@ def load(spec: dict, *args, **kwargs) -> Any:
 
     For example:
 
-    __module__: "blocktrain.datasets",
+    __module__: "trainblock.datasets",
     __class__: "S3Datset",
     __args__:
         - "s3://mydataset/path"
@@ -27,7 +27,7 @@ def load(spec: dict, *args, **kwargs) -> Any:
 
     will instantiate the fully do something like:
 
-        from blocktrain.datasets import S3Dataset
+        from trainblock.datasets import S3Dataset
 
         return S3Dataset(
             "s3://mydataset/path",

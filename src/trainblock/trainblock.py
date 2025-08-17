@@ -9,7 +9,7 @@ class ITrainConfig:
 class IEvalConfig:
     pass
 
-class BlockTrainAPI:
+class TrainblockAPI:
     def train(self, config : ITrainConfig, *args, **kwargs):
         pass
 
@@ -35,13 +35,14 @@ class BlockTrainAPI:
         pass
 
 
-class BlockTrain(BlockTrainAPI):
+class Trainblock(TrainblockAPI):
 
     def __init__(self, *args, **kwargs):
         pass
 
-class BlockTrainFactory:
+class TrainblockFactory:
     """
-    Load blocktrain instances given the 
+    Load trainblock instances given the 
     """
-    def from_experiment_file(experiment: Path) -> BlockTrain:
+    def from_experiment_file(experiment: Path) -> Trainblock:
+        pass

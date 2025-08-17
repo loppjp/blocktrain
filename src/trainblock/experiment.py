@@ -1,6 +1,6 @@
-from blocktrain.factories.loader import load
-from blocktrain.factories.dataloader_factory import dataloader_factory
-from blocktrain.experiment_api import BaseExperiment
+from trainblock.factories.loader import load
+from trainblock.factories.dataloader_factory import dataloader_factory
+from trainblock.experiment_api import BaseExperiment
 
 
 class Experiment(BaseExperiment):

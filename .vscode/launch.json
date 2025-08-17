@@ -12,10 +12,10 @@
             "console": "integratedTerminal"
         },
         {
-            "name": "blocktrain train",
+            "name": "trainblock train",
             "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}/env/bin/blocktrain",
+            "program": "${workspaceFolder}/env/bin/trainblock",
             "console": "integratedTerminal",
             "args": [
                 "train"

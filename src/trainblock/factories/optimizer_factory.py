@@ -1,7 +1,7 @@
 import torch
 
-from blocktrain.factories.loader import load
-from blocktrain.component_api import IComponentProvider
+from trainblock.factories.loader import load
+from trainblock.component_api import IComponentProvider
 
 def load_optimizer(
     *args,

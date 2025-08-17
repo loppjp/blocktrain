@@ -3,9 +3,9 @@ from dataclasses import dataclass
 import torch
 from tqdm import tqdm
 
-from blocktrain.component_api import IComponentProvider
-from blocktrain.trainer_api import ITrainer
-from blocktrain.callbacks import (
+from trainblock.component_api import IComponentProvider
+from trainblock.trainer_api import ITrainer
+from trainblock.callbacks import (
     ICallback,
     EpochTrainingOutputData,
     TrainingStepInputData,
@@ -13,7 +13,7 @@ from blocktrain.callbacks import (
     EvalStepInputData,
     EvalStepOutputData,
 )
-from blocktrain.experiment_api import (
+from trainblock.experiment_api import (
     TrainingInputParameters,
     TrainingEpochInputData,
     EvalEpochInputData,

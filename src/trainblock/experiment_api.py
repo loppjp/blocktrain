@@ -2,9 +2,9 @@ from dataclasses import dataclass
 
 from torch.utils.data import DataLoader, Dataset
 
-from blocktrain.callbacks import ICallback
-from blocktrain.trainer_api import ITrainer
-from blocktrain.component_api import IComponentProvider
+from trainblock.callbacks import ICallback
+from trainblock.trainer_api import ITrainer
+from trainblock.component_api import IComponentProvider
 
 
 @dataclass

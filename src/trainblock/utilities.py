@@ -1,10 +1,10 @@
 from pathlib import Path
 
-import blocktrain
+import trainblock
 
 def get_config_path():
     """
     This function makes a relative path assumption about the location
     of the config directory for experiments
     """
-    return Path(blocktrain.__file__).parent.parent.parent/"config"
+    return Path(trainblock.__file__).parent.parent.parent/"config"

@@ -1,8 +1,8 @@
 import yaml 
 from pathlib import Path
 
-from blocktrain.experiment import Experiment
-from blocktrain.factories.loader import load
+from trainblock.experiment import Experiment
+from trainblock.factories.loader import load
 
 def unpack_experiment(spec: dict):
     """

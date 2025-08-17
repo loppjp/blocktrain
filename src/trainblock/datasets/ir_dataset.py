@@ -3,7 +3,7 @@ from pathlib import Path
 
 import torch
 
-from blocktrain.factories.loader import load
+from trainblock.factories.loader import load
 
 
 def ir_dataset_factory(
@@ -11,7 +11,7 @@ def ir_dataset_factory(
     indicies_json_file_path: Path,
     child_dataset_folder_path_glob: str = "*_1",
     child_spec: dict = {
-        "__module__": "blocktrain.datasets.ir_ram_dataset",
+        "__module__": "trainblock.datasets.ir_ram_dataset",
         "__class__":  "FolderImageRAMDataset"
     }
 ) -> torch.utils.data.Dataset:

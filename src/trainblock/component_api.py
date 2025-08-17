@@ -3,8 +3,8 @@ from typing import Callable
 from torch.optim import Optimizer
 from torch.utils.data import DataLoader, Dataset
 
-from blocktrain.trainer_api import ITrainer
-from blocktrain.callbacks import ICallback
+from trainblock.trainer_api import ITrainer
+from trainblock.callbacks import ICallback
 
 
 class IEvalComponentProvider:

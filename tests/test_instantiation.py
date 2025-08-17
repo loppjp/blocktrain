@@ -3,11 +3,11 @@ import unittest
 import yaml
 import torch
 
-from blocktrain.factories.loader import load
-from blocktrain.factories.experiment_factory import from_file
-from blocktrain.test_utilities.utilities import get_test_experiment
-from blocktrain.component_api import IComponentProvider
-from blocktrain.factories.dataloader_factory import dataloader_factory
+from trainblock.factories.loader import load
+from trainblock.factories.experiment_factory import from_file
+from trainblock.test_utilities.utilities import get_test_experiment
+from trainblock.component_api import IComponentProvider
+from trainblock.factories.dataloader_factory import dataloader_factory
 
 """
 Tests in this module focus on instantiating the components

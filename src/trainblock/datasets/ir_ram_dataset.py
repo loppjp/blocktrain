@@ -5,7 +5,7 @@ import cv2
 from torch.utils.data import Dataset
 import torch
 
-from blocktrain.datasets.label import from_ir_json_labels, Label
+from trainblock.datasets.label import from_ir_json_labels, Label
 
 
 class FolderImageRAMDataset(Dataset):
