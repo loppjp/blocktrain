@@ -54,6 +54,13 @@
             "request": "launch",
             "module": "pytest",
             "args": ["tests/test_instantiation.py::TestInstantiateOptimizer"]
+        },
+        {
+            "name": "Test Instantiate Trainer",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "pytest",
+            "args": ["tests/test_instantiation.py::TestInstantiateTrainer"]
         }
     ]
 }

@@ -15,8 +15,8 @@ experiment:
     __class__: "ir_dataset_factory"
   trainer:
     __module__: "blocktrain.trainer"
-    __class___: "Trainer"
-  callbacks:
+    __class__: "Trainer"
+  callbacks: []
   model:
     __module__: "blocktrain.factories.torchvision_model_factory"
     __class__: "load_torchvision_model"

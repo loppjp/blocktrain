@@ -61,3 +61,15 @@ class TestInstantiateOptimizer(unittest.TestCase):
             component_provider=TestComponentProvider()
         )
         self.assertIsNotNone(o)
+
+
+class TestInstantiateTrainer(unittest.TestCase):
+
+    def test_instantiate(self):
+        t = get_test_experiment()
+        spec = yaml.load(t.open(), Loader=yaml.SafeLoader)
+        tr = load(
+            spec["experiment"]["trainer"],
+            component_provider=TestComponentProvider()
+        )
+        self.assertIsNotNone(tr)

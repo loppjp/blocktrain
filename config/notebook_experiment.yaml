@@ -4,7 +4,7 @@ experiment:
   train_dataset:
     __args__: 
       - "/mnt/d/drone_data/training-data"
-      - "data/train_indicies.json"
+      - "../data/train_indicies.json"
     __module__: "blocktrain.datasets.ir_dataset" 
     __class__: "ir_dataset_factory"
     child_spec:
@@ -13,7 +13,7 @@ experiment:
   eval_dataset:
     __args__: 
       - "/mnt/d/drone_data/training-data"
-      - "data/eval_indicies.json"
+      - "../data/eval_indicies.json"
     __module__: "blocktrain.datasets.ir_dataset" 
     __class__: "ir_dataset_factory"
     child_spec:

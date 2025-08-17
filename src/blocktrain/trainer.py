@@ -82,7 +82,7 @@ class Trainer(BaseTrainer):
         **kwargs,
     ):
 
-        super(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def train_epoch(self, epoch_data: EpochInputData):
 
