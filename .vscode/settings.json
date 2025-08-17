@@ -1,0 +1,4 @@
+{
+    // avoid lint errors like cv2.imread
+    "pylint.args": ["--generated-members=(cv2.*)"]
+}

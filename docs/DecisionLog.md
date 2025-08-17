@@ -73,3 +73,5 @@ There are multiple machine learning frameworks, and multiple deep learning frame
  2 initial types of Dataset classes will be created, ones that load from the filesystem with load perations occuring at each invocation of `__getitem__` and the other pre-loading the dataset into RAM at class initialization time.
 
  This is done to allow flexibility in workflows depending on RAM or disk utilization. The expectation will be to use the RAM based datasets more often.
+
+ 1. The Experiment class will have a dataloader. This will be highly coupled to the pytorch API for now. 
