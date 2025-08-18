@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 
 from torch.utils.data import DataLoader, Dataset
+from torch.utils.data import default_collate
 
 from trainblock.callbacks import ICallback
 from trainblock.trainer_api import ITrainer
@@ -36,6 +37,8 @@ class BaseExperiment(IComponentProvider):
 
         self.data: dict = {}
         self.components: dict = {}
+
+        self.collator = default_collate
 
 
     def get_train_dataset(self) -> Dataset:

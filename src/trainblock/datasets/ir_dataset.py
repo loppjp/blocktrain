@@ -26,7 +26,7 @@ def ir_dataset_factory(
     full_dataset: torch.utils.data.Dataset = torch.utils.data.ConcatDataset([
         load({
             "__args__":[
-                list(dataset_folder.glob("*.json"))[0], # annotations file
+                list(dataset_folder.glob("*.json"))[0], # only one annotations file
                 dataset_folder,
             ],
             **child_spec

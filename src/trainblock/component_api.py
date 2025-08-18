@@ -26,6 +26,8 @@ class ITrainingComponentProvider:
 
     def get_loss_function(self) -> Callable: pass
 
+    def get_collator(self) -> Callable: pass
+
 class IComponentProvider(
     ITrainingComponentProvider,
     IEvalComponentProvider

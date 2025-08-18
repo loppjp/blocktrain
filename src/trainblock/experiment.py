@@ -26,12 +26,28 @@ class Experiment(BaseExperiment):
         # optimizer (requires model weights)
         self.optimizer = None
 
+        self.collator = None
+
     def get_model(self):
         return self.model
 
     def get_optimizer(self):
         return self.optimizer
 
+    def get_train_dataset(self):
+        return self.train_dataset
+
+    def get_eval_dataset(self):
+        return self.eval_dataset
+
+    def get_train_dataloader(self):
+        return self.train_dataloader
+
+    def get_eval_dataloader(self):
+        return self.eval_dataloader
+
+    def get_collator(self):
+        return self.collator
 
 
 def experiment_factory(*_, **kwargs) -> Experiment:
@@ -50,16 +66,18 @@ def experiment_factory(*_, **kwargs) -> Experiment:
 
     e.optimizer = load(kwargs["optimizer"], component_provider=e)
 
+    e.collator = load(kwargs["collator"])
+
     e.train_dataloader = dataloader_factory(
         e.get_train_dataset(),
+        collate_fn=e.collator,
         **kwargs["train_dataloader"]
     )
 
     e.eval_dataloader = dataloader_factory(
         e.get_eval_dataset(),
+        collate_fn=e.collator,
         **kwargs["eval_dataloader"]
     )
-
-
 
     return e

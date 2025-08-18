@@ -97,7 +97,6 @@ class Trainer(BaseTrainer):
         model: torch.nn = self.component_provider.get_model()
         model.train(True)
         optimizer: torch.optim.Optimizer = self.component_provider.get_optimizer()
-        loss_function: torch.Tensor = self.component_provider.get_loss_function()
 
         for idx, data in enumerate(epoch_data.dataloader):
 
@@ -106,14 +105,14 @@ class Trainer(BaseTrainer):
 
             X, y = data
             optimizer.zero_grad()
-            losses = model(X, y)
-            losses_reduced = sum(loss for loss in losses.values())
-            losses = losses_reduced.item()
+            loss_dict = model(X, y)
+            losses = sum(loss for loss in loss_dict.values())
+            loss_value = losses.item()
             losses.backward()
             optimizer.step()
 
             for callback in self.callbacks:
-                callback.on_train_step_end(TrainingStepOutputData(loss=losses.item()))
+                callback.on_train_step_end(TrainingStepOutputData(loss=loss_value))
 
     def eval_epoch(self, epoch_data: EvalEpochInputData):
 

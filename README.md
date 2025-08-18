@@ -300,6 +300,32 @@ Saving checkpoints during the training process is vital for retreiving a working
 
 The experiment specification data structure ([example](config/experiment.yaml)) is a natural fit for generation by a programattic design-of-experiments process. That is an design space can be explored by passing different variables into each component as hyperparameters in a search over alternatives.
 
+### 8.4 Video inference pipeline
+
+Test data in the form of videos must be decomposed into frames and labeled for testing. Initially qualitative testing can be accomplished by drawing boxes on images with humans providing qualitative feedback, however, it is likely that labeled images will be required to determine performance on a video test set. CLI options and notebooks should be created to support video inference.
+
+Video inference could take the form of splitting videos into frames and sending them to a trained image based object detection model for inference in batches. Human inference could occur if bounding boxes were overlaid on videos.
+
+### 8.5 Electromagnetic (EM) Spectrum Considerations
+
+Videos captured in other regions of the electro-magnetic spectrum may be in a completely different channel distribution that the images in the training dataset, which appeared to have been created with a visible light camera. As such steps must be taken to:
+- distributional analysis of the alternate EM spectrum soruces should be considered
+- augment training data if it is to be used to become in family with test distribution
+- curation of additional training datasets in the desired EM spectrum may be useful
+- domain analysis (time of day, temperature, different targets, anomalies) for data captured in the target EM spectrum must be conducted
+
+### 8.6 Device considerations
+
+Moving training examples from CPU to GPU was discounted during initial development. This is typically done by specifying the `.device()` on a torch tensor. This needs to be accounted for to accelerate training.
+
+### 8.7 Non-existant bounding boxes
+
+No mechanisms were introduced to gracefully account for training examples with 0 bounding boxes. This should be simply filtering them from the dataset a-priori. However, for now, for simplicity, we are setting the bounding box to the entire canvas
+
+### 8.8
+
+Data cleaning. Additional work must be done to ensure the dataset bounding boxes are cleaned before training. This entails determining what should be done with training images which do not contain boxes, and what should be done with degenerate boxes.
+
 ## 9. Citations
 
 - [1] Svanström F, Englund C and Alonso-Fernandez F. (2020), GitHub repository, <br>

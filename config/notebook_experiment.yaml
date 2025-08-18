@@ -52,3 +52,6 @@ experiment:
     optimizer_module: "torch.optim"
     optimizer_class: "Adam"
     lr: 0.001
+  collator:
+    __module__: "trainblock.collator"
+    __class__: "Collator"

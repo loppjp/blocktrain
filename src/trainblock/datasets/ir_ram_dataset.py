@@ -6,6 +6,7 @@ from torch.utils.data import Dataset
 import torch
 
 from trainblock.datasets.label import from_ir_json_labels, Label
+from torchvision import tv_tensors
 
 
 class FolderImageRAMDataset(Dataset):
